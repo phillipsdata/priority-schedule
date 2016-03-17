@@ -1,5 +1,9 @@
 # Priority Schedule
 
+[![Build Status](https://travis-ci.org/phillipsdata/priority-schedule.svg?branch=master)](https://travis-ci.org/phillipsdata/priority-schedule)
+[![Coverage Status](https://coveralls.io/repos/phillipsdata/priority-schedule/badge.svg)](https://coveralls.io/r/phillipsdata/priority-schedule)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/phillipsdata/priority-schedule/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/phillipsdata/priority-schedule/?branch=master)
+
 A priority schedule library.
 
 This library provides data structures for performing **Round Robin** and
