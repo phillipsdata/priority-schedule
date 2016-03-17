@@ -3,7 +3,6 @@ namespace PhillipsData\PrioritySchedule;
 
 use SplHeap;
 use RuntimeException;
-use CallbackFilterIterator;
 use PhillipsData\PrioritySchedule\Exceptions\NoSuchElementException;
 
 /**
