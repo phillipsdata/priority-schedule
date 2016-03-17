@@ -13,6 +13,15 @@ composer require phillipsdata/priority-schedule
 
 ## Usage
 
+There are two built-in priority schedules:
+
+1. **Round Robin**
+    - Returns the item with the least weight such that the weight
+of each of the items is proportional.
+2. **First Available**
+    - Returns items in the order added added (FIFO) such that
+only valid items are returned.
+
 ### Round Robin
 
 The Round Robin schedule allows you retrieve items in an evenly distributed
@@ -94,8 +103,8 @@ B (5)
 
 ### First Available
 
-The First Available schedule allows you to retrieve elements in order the order
-in which they were added (FIFO), skipping elements that are not eligible (think
+The First Available schedule allows you to retrieve elements in the order in
+which they were added (FIFO), skipping elements that are not eligible (think
 of the line to get into a night club) using a callback.
 
 Suppose you have 3 bucket objects:
