@@ -4,7 +4,6 @@ namespace PhillipsData\PrioritySchedule\Tests\Unit;
 use PhillipsData\PrioritySchedule\FirstAvailable;
 use PHPUnit_Framework_TestCase;
 
-
 /**
  * @coversDefaultClass \PhillipsData\PrioritySchedule\FirstAvailable
  */
