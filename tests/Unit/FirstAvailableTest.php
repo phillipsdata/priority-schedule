@@ -75,6 +75,27 @@ class FirstAvailableTest extends PHPUnit_Framework_TestCase
     }
 
     /**
+     * @covers ::insert
+     * @covers ::count
+     */
+    public function testIterationRemovesItems()
+    {
+        $items = array('a', 'b', 'c');
+        foreach ($items as $item) {
+            $this->fa->insert($item);
+        }
+        $expectedCount = count($items);
+
+        $this->assertEquals($expectedCount, $this->fa->count());
+
+        foreach ($this->fa as $item) {
+            $this->assertEquals($expectedCount--, $this->fa->count());
+        }
+
+        $this->assertEquals(0, $this->fa->count());
+    }
+
+    /**
      * @covers ::count
      * @covers ::insert
      * @dataProvider sampleItemsProvider
@@ -90,7 +111,6 @@ class FirstAvailableTest extends PHPUnit_Framework_TestCase
 
     /**
      * @covers ::extract
-     * @covers ::current
      * @covers ::insert
      */
     public function testExtract()
@@ -103,7 +123,6 @@ class FirstAvailableTest extends PHPUnit_Framework_TestCase
 
     /**
      * @covers ::extract
-     * @covers ::current
      * @expectedException \PhillipsData\PrioritySchedule\Exceptions\NoSuchElementException
      */
     public function testExtractException()
