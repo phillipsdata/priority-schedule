@@ -2,30 +2,26 @@
 namespace PhillipsData\PrioritySchedule;
 
 use SplQueue;
-use CallbackFilterIterator;
 use PhillipsData\PrioritySchedule\Exceptions\NoSuchElementException;
 
 /**
  * First Available Priorirty Schedule implemented using a Queue
  */
-class FirstAvailable implements ScheduleInterface
+class FirstAvailable extends SplQueue implements ScheduleInterface
 {
     /**
-     * @var CallbackFilterIterator using an SplQueue
+     * @var callable
      */
-    protected $filterQueue;
+    protected $callbackFilter;
 
     /**
      * Initialize the priority schedule
      */
     public function __construct()
     {
-        $this->filterQueue = new CallbackFilterIterator(
-            new SplQueue(),
-            function ($item) {
-                return (bool) $item;
-            }
-        );
+        $this->callbackFilter = function ($item) {
+            return (bool) $item;
+        };
     }
 
     /**
@@ -36,10 +32,7 @@ class FirstAvailable implements ScheduleInterface
      */
     public function setCallback(callable $callback)
     {
-        $this->filterQueue = new CallbackFilterIterator(
-            $this->filterQueue->getInnerIterator(),
-            $callback
-        );
+        $this->callbackFilter = $callback;
     }
 
     /**
@@ -47,10 +40,10 @@ class FirstAvailable implements ScheduleInterface
      */
     public function insert($item)
     {
-        $this->filterQueue->getInnerIterator()->enqueue($item);
-        // Must rewind the CallbackFilterIterator so it's primed to read from
-        // the head of the SplQueue
-        $this->filterQueue->rewind();
+        if (call_user_func($this->callbackFilter, $item)) {
+            $this->enqueue($item);
+            $this->rewind();
+        }
     }
 
     /**
@@ -58,17 +51,7 @@ class FirstAvailable implements ScheduleInterface
      */
     public function extract()
     {
-        $current = $this->current();
-        $this->next();
-        return $current;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function count()
-    {
-        return $this->filterQueue->getInnerIterator()->count();
+        return $this->current();
     }
 
     /**
@@ -83,38 +66,6 @@ class FirstAvailable implements ScheduleInterface
                 'Can not extract from empty queue.'
             );
         }
-        return $this->filterQueue->current();
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function key()
-    {
-        return $this->filterQueue->key();
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function next()
-    {
-        $this->filterQueue->next();
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function rewind()
-    {
-        $this->filterQueue->rewind();
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function valid()
-    {
-        return $this->filterQueue->valid();
+        return parent::current();
     }
 }

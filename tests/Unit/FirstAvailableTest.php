@@ -55,11 +55,6 @@ class FirstAvailableTest extends PHPUnit_Framework_TestCase
     /**
      * @covers ::setCallback
      * @covers ::insert
-     * @covers ::rewind
-     * @covers ::next
-     * @covers ::current
-     * @covers ::valid
-     * @covers ::key
      * @dataProvider sampleItemsProvider
      */
     public function testCallbackSetsPriority($items, $expected, $rule)
@@ -96,13 +91,13 @@ class FirstAvailableTest extends PHPUnit_Framework_TestCase
     /**
      * @covers ::extract
      * @covers ::current
-     * @covers ::next
      * @covers ::insert
      */
     public function testExtract()
     {
         $item = 'a';
         $this->fa->insert($item);
+
         $this->assertEquals($item, $this->fa->extract());
     }
 
