@@ -22,6 +22,9 @@ class FirstAvailable extends SplQueue implements ScheduleInterface
         $this->callbackFilter = function ($item) {
             return (bool) $item;
         };
+        $this->setIteratorMode(
+            SplQueue::IT_MODE_DELETE
+        );
     }
 
     /**
@@ -51,21 +54,11 @@ class FirstAvailable extends SplQueue implements ScheduleInterface
      */
     public function extract()
     {
-        return $this->current();
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @throws NoSuchElementException
-     */
-    public function current()
-    {
         if (!$this->valid()) {
             throw new NoSuchElementException(
                 'Can not extract from empty queue.'
             );
         }
-        return parent::current();
+        return $this->current();
     }
 }
